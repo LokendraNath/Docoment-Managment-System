@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTags, uploadFile } from "../features/docoments/docomentSlice";
+import { fetchTags, uploadFile } from "../features/documents/documentSlice";
 
 const Upload = () => {
   const [file, setFile] = useState(null);
