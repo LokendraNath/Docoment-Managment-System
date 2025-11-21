@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { searchDocuments } from "../features/documents/documentSlice";
+import FileActions from "../components/FileActions";
 
 const Search = () => {
   const [filters, setFilters] = useState({
@@ -84,14 +85,7 @@ const Search = () => {
               <h3 className="font-semibold">{doc.name}</h3>
               <p className="text-gray-600 text-sm">{doc.document_remarks}</p>
             </div>
-            <div className="flex gap-2">
-              <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                Preview
-              </button>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                Download
-              </button>
-            </div>
+            <FileActions file={doc.file} />
           </div>
         ))}
       </div>
