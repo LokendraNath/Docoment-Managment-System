@@ -19,7 +19,7 @@ const AdminPanel = () => {
         <div className="mb-6">
           <Link
             to="/"
-            className="text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-2"
+            className="text-orange-500 hover:text-orange-600 font-medium flex items-center gap-2"
           >
             ← Back to Dashboard
           </Link>
@@ -42,7 +42,7 @@ const AdminPanel = () => {
                   placeholder="Enter username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
                 />
               </div>
 
@@ -55,13 +55,13 @@ const AdminPanel = () => {
                   placeholder="Enter password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-gray-800 text-white py-3.5 rounded-xl font-bold shadow-lg hover:bg-gray-900 transition-all transform hover:-translate-y-0.5"
+                className="w-full bg-orange-500 text-white py-3.5 rounded-xl font-bold shadow-lg hover:bg-orange-600 transition-all transform hover:-translate-y-0.5"
               >
                 Create User
               </button>
