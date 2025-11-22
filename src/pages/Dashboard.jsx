@@ -22,11 +22,11 @@ const Dashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-20">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
+              <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
                 A
               </div>
               <div>
-                <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+                <h1 className="text-2xl font-bold text-black">
                   AllSoft
                 </h1>
                 <p className="text-xs text-gray-500 font-medium">
@@ -38,7 +38,7 @@ const Dashboard = () => {
             <div className="flex items-center gap-6">
               <Link
                 to="/admin"
-                className="text-gray-600 hover:text-indigo-600 font-medium transition-colors"
+                className="text-gray-600 hover:text-orange-500 font-medium transition-colors"
               >
                 Admin Panel
               </Link>
@@ -62,8 +62,8 @@ const Dashboard = () => {
               onClick={() => setActiveTab("upload")}
               className={`px-8 py-3 rounded-xl font-semibold transition-all duration-200 flex items-center gap-2 ${
                 activeTab === "upload"
-                  ? "bg-indigo-600 text-white shadow-md"
-                  : "text-gray-600 hover:text-indigo-600 hover:bg-gray-50"
+                  ? "bg-orange-500 text-white shadow-md"
+                  : "text-gray-600 hover:text-orange-500 hover:bg-gray-50"
               }`}
             >
               <svg
@@ -85,8 +85,8 @@ const Dashboard = () => {
               onClick={() => setActiveTab("search")}
               className={`px-8 py-3 rounded-xl font-semibold transition-all duration-200 flex items-center gap-2 ${
                 activeTab === "search"
-                  ? "bg-indigo-600 text-white shadow-md"
-                  : "text-gray-600 hover:text-indigo-600 hover:bg-gray-50"
+                  ? "bg-orange-500 text-white shadow-md"
+                  : "text-gray-600 hover:text-orange-500 hover:bg-gray-50"
               }`}
             >
               <svg
