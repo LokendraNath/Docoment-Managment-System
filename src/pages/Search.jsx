@@ -44,7 +44,10 @@ const Search = () => {
 
   const handleTagAdd = (e) => {
     if (e.key === "Enter" && tagInput.trim()) {
-      setFilters({ ...filters, tags: [...filters.tags, tagInput.trim()] });
+      const newTag = tagInput.trim();
+      if (!filters.tags.includes(newTag)) {
+        setFilters({ ...filters, tags: [...filters.tags, newTag] });
+      }
       setTagInput("");
     }
   };
@@ -56,19 +59,63 @@ const Search = () => {
     });
   };
 
-  const handlePreview = (fileUrl) => {
+  const getFileUrl = (doc) => {
+    // Try to find the URL in common fields
+    const url = doc.file_url || doc.document_url || doc.url || doc.file || doc.path;
+    if (!url) return null;
+
+    // If it's already an absolute URL, return it
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+      return url;
+    }
+
+    // If it's a relative path, prepend the API domain
+    // Removing leading slash if present to avoid double slashes
+    const cleanPath = url.startsWith("/") ? url.slice(1) : url;
+    return `https://apis.allsoft.co/${cleanPath}`;
+  };
+
+  const handlePreview = (doc) => {
+    const fileUrl = getFileUrl(doc);
     if (fileUrl) {
+      console.log("Opening Preview URL:", fileUrl);
       window.open(fileUrl, "_blank");
     } else {
-      alert("Preview not available for this file type");
+      console.error("File URL not found in document:", doc);
+      alert("Preview not available: File URL is missing.");
     }
   };
 
-  const handleDownload = (fileUrl, fileName) => {
-    const a = document.createElement("a");
-    a.href = fileUrl;
-    a.download = fileName;
-    a.click();
+  const handleDownload = async (doc) => {
+    const fileUrl = getFileUrl(doc);
+    if (!fileUrl) {
+      alert("Download not available: File URL is missing.");
+      return;
+    }
+
+    try {
+      console.log("Attempting download for:", fileUrl);
+
+      // Method 1: Try fetching as blob to force download (avoids opening in tab)
+      const response = await fetch(fileUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = doc.document_name || "document";
+      document.body.appendChild(a); // Required for Firefox
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error("Blob download failed, falling back to direct link:", error);
+      // Method 2: Fallback to direct link (might open in new tab for PDFs)
+      const a = document.createElement("a");
+      a.href = fileUrl;
+      a.download = doc.document_name || "document";
+      a.target = "_blank";
+      a.click();
+    }
   };
 
   return (
@@ -164,7 +211,9 @@ const Search = () => {
                      <button
                        key={i}
                        onClick={() => {
-                         setFilters({ ...filters, tags: [...filters.tags, tag.tag_name] });
+                         if (!filters.tags.includes(tag.tag_name)) {
+                           setFilters({ ...filters, tags: [...filters.tags, tag.tag_name] });
+                         }
                        }}
                        className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-2 py-1 rounded-md transition-colors"
                      >
@@ -250,15 +299,13 @@ const Search = () => {
 
                 <div className="flex gap-3 w-full md:w-auto">
                   <button
-                    onClick={() => handlePreview(doc.file_url)}
+                    onClick={() => handlePreview(doc)}
                     className="flex-1 md:flex-none px-4 py-2 bg-yellow-50 text-yellow-700 rounded-lg font-medium hover:bg-yellow-100 transition-colors border border-yellow-200"
                   >
                     Preview
                   </button>
                   <button
-                    onClick={() =>
-                      handleDownload(doc.file_url, doc.document_name)
-                    }
+                    onClick={() => handleDownload(doc)}
                     className="flex-1 md:flex-none px-4 py-2 bg-green-50 text-green-700 rounded-lg font-medium hover:bg-green-100 transition-colors border border-green-200"
                   >
                     Download
