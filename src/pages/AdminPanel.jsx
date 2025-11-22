@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const AdminPanel = () => {
   const [username, setUsername] = useState("");
@@ -13,35 +14,61 @@ const AdminPanel = () => {
   };
 
   return (
-    <div className="p-8 max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-800 mb-8">
-        Admin - User Creation
-      </h1>
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-xl shadow-lg space-y-4"
-      >
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-        />
-        <button
-          type="submit"
-          className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700"
-        >
-          Create User
-        </button>
-      </form>
+    <div className="min-h-screen bg-gray-50 p-8">
+      <div className="max-w-2xl mx-auto">
+        <div className="mb-6">
+          <Link
+            to="/"
+            className="text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-2"
+          >
+            ← Back to Dashboard
+          </Link>
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div className="bg-gradient-to-r from-gray-800 to-gray-900 p-8 text-white">
+            <h1 className="text-3xl font-bold">Admin Panel</h1>
+            <p className="text-gray-400 mt-2">Create and manage system users</p>
+          </div>
+
+          <div className="p-8">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Username
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-gray-800 text-white py-3.5 rounded-xl font-bold shadow-lg hover:bg-gray-900 transition-all transform hover:-translate-y-0.5"
+              >
+                Create User
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
