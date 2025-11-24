@@ -22,7 +22,6 @@ const Login = () => {
   const handleValidateOTP = async () => {
     const result = await dispatch(validateOTP({ mobile_number: mobile, otp }));
     if (result.meta.requestStatus === "fulfilled") {
-      // Login successful
     }
   };
 

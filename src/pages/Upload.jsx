@@ -108,7 +108,6 @@ const Upload = () => {
     const formData = new FormData();
     formData.append("file", file);
 
-    // Convert date from YYYY-MM-DD to DD-MM-YYYY format (only if date exists)
     const formattedDate = date ? date.split('-').reverse().join('-') : '';
 
     const data = {

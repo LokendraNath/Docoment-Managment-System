@@ -1,10 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// API URLs
 const API_BASE = "https://apis.allsoft.co/api/documentManagement";
 
-// Thunks
 export const generateOTP = createAsyncThunk(
   "auth/generateOTP",
   async (mobile_number, { rejectWithValue }) => {
@@ -73,14 +71,13 @@ const authSlice = createSlice({
       .addCase(validateOTP.fulfilled, (state, action) => {
         console.log("Full API Response:", action.payload);
         state.loading = false;
-        // Handle potential response structures
+
         const token = action.payload.token || action.payload.data?.token || action.payload.result?.token;
 
         if (token) {
           state.token = token;
           localStorage.setItem("token", token);
         } else {
-           // Fallback if token is missing but request succeeded (unlikely but possible)
            console.error("Token not found in response");
            state.error = "Login succeeded but token missing";
         }

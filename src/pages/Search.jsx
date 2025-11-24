@@ -9,7 +9,6 @@ const Search = () => {
     (state) => state.documents
   );
 
-  // Fetch tags on mount
   useEffect(() => {
     if (token) {
       dispatch(fetchTags(token));
@@ -25,7 +24,6 @@ const Search = () => {
   });
   const [tagInput, setTagInput] = useState("");
 
-  // Preview Modal State
   const [previewDoc, setPreviewDoc] = useState(null);
 
   const handleSearch = async () => {
@@ -75,7 +73,6 @@ const Search = () => {
     console.log("=== GET FILE URL DEBUG ===");
     console.log("Document object:", doc);
 
-    // Try to find the URL in common fields
     const url = doc.file_url || doc.document_url || doc.url || doc.file || doc.path;
     console.log("Found URL in document:", url);
 
@@ -84,13 +81,11 @@ const Search = () => {
       return null;
     }
 
-    // If it's already an absolute URL, return it
     if (url.startsWith("http://") || url.startsWith("https://")) {
       console.log("Absolute URL, returning as-is:", url);
       return url;
     }
 
-    // If it's a relative path, prepend the API domain
     const cleanPath = url.startsWith("/") ? url.slice(1) : url;
     const fullUrl = `https://apis.allsoft.co/${cleanPath}`;
     console.log("Relative URL, converted to:", fullUrl);
@@ -136,7 +131,6 @@ const Search = () => {
     }
   };
 
-  // Helper to determine file type for preview
   const getFileType = (url) => {
     if (!url) return "unknown";
     const extension = url.split('.').pop().toLowerCase();
@@ -299,7 +293,6 @@ const Search = () => {
               <tbody className="divide-y divide-gray-100">
                 {[...searchResults]
                   .sort((a, b) => {
-                    // Calculate tag match scores
                     const searchTags = filters.tags.map(t => t.toLowerCase());
                     const aTagsLower = (a.tags || []).map(tag =>
                       (typeof tag === 'string' ? tag : tag.tag_name || '').toLowerCase()
@@ -315,12 +308,10 @@ const Search = () => {
                       bTagsLower.some(docTag => docTag.includes(searchTag) || searchTag.includes(docTag))
                     ).length;
 
-                    // Primary sort: by tag matches (descending)
                     if (aMatches !== bMatches) {
                       return bMatches - aMatches;
                     }
 
-                    // Secondary sort: by date (descending)
                     const dateA = new Date(a.document_date);
                     const dateB = new Date(b.document_date);
                     const timeA = isNaN(dateA.getTime()) ? 0 : dateA.getTime();

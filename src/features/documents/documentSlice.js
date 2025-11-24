@@ -1,10 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// CRITICAL FIX: Space hataya hai end se
 const API_BASE = "https://apis.allsoft.co/api/documentManagement";
 
-// Async thunks
 export const fetchTags = createAsyncThunk(
   "documents/fetchTags",
   async (token, { rejectWithValue }) => {
@@ -107,7 +105,7 @@ const documentSlice = createSlice({
       .addCase(searchDocuments.fulfilled, (state, action) => {
         state.loading = false;
         console.log("Search Fulfilled Payload:", action.payload);
-        // Handle various response structures
+
         let results = [];
         if (Array.isArray(action.payload)) {
           results = action.payload;
